@@ -1,0 +1,10 @@
+<div>
+  <div #wave></div>
+  <button
+    class="px-3 py-2 border-solid border-2 border-gray-500 bg-cyan-300 rounded-lg hover:bg-fuchsia-400"
+    (click)="playPause()"
+  >
+    <span *ngIf="isPlaying(); else elseBlock">Pause</span>
+    <ng-template #elseBlock>Play</ng-template>
+  </button>
+</div>
