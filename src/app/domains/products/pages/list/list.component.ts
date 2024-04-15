@@ -13,6 +13,7 @@ import { Product } from '../../../shared/model/product.model';
 })
 export class ListComponent {
   products = signal<Product[]>([]);
+  cart = signal<Product[]>([]);
 
   constructor() {
     const InitProducts: Product[] = [
@@ -39,35 +40,35 @@ export class ListComponent {
       },
       {
         id: Date.now(),
-        title: 'Pro 1',
+        title: 'Pro 4',
         price: 100,
         image: 'https://picsum.photos/640/640?r=33',
         creationAt: new Date().toISOString(),
       },
       {
         id: Date.now(),
-        title: 'Pro 2',
+        title: 'Pro 5',
         price: 100,
         image: 'https://picsum.photos/640/640?r=32',
         creationAt: new Date().toISOString(),
       },
       {
         id: Date.now(),
-        title: 'Pro 3',
+        title: 'Pro 6',
         price: 100,
-        image: 'https://picsum.photos/640/640?r=11',
+        image: 'https://picsum.photos/640/640?r=51',
         creationAt: new Date().toISOString(),
       },
       {
         id: Date.now(),
-        title: 'Pro 2',
+        title: 'Pro 7',
         price: 100,
         image: 'https://picsum.photos/640/640?r=42',
         creationAt: new Date().toISOString(),
       },
       {
         id: Date.now(),
-        title: 'Pro 3',
+        title: 'Pro 8',
         price: 100,
         image: 'https://picsum.photos/640/640?r=41',
         creationAt: new Date().toISOString(),
@@ -76,8 +77,7 @@ export class ListComponent {
     this.products.set(InitProducts);
   }
 
-  fromChild(event: string) {
-    console.log('estamos en el padre');
-    console.log(event);
+  addToCart(product: Product) {
+    this.cart.update((prevState) => [...prevState, product]);
   }
 }
