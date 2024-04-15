@@ -82,13 +82,13 @@
       *ngFor="let product of cart()"
     >
       <div class="flex space-x-2 items-center">
-        <img class="w-6 h-6" [src]="product.image" [alt]="product.title" />
+        <img class="w-6 h-6" [src]="product.images[0]" [alt]="product.title" />
         <h3>{{ product.title }}</h3>
       </div>
       <p>{{ "$" + product.price }}</p>
     </div>
     <div class="mt-4">
-      <p>Total: {{ "$" + total() }}</p>
+      <p>Total: {{ total() | currency }}</p>
     </div>
   </div>
 </div>

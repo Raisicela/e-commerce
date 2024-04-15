@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
-import { ProductComponent } from '../../components/product/product.component';
-import { HeaderComponent } from '../../../shared/components/header/header.component';
-import { Product } from '../../../shared/model/product.model';
-import { CartService } from '../../../shared/services/cart.service';
+import { ProductComponent } from '@products/components/product/product.component';
+import { HeaderComponent } from '@shared/components/header/header.component';
+import { Product } from '@shared/model/product.model';
+import { CartService } from '@shared/services/cart.service';
+import { ProductService } from '@shared/services/product.service';
 
 @Component({
   selector: 'app-list',
@@ -15,67 +16,17 @@ import { CartService } from '../../../shared/services/cart.service';
 export class ListComponent {
   products = signal<Product[]>([]);
   private cartService = inject(CartService);
+  private productService = inject(ProductService);
 
-  constructor() {
-    const InitProducts: Product[] = [
-      {
-        id: Date.now(),
-        title: 'Pro 1',
-        price: 100,
-        image: 'https://picsum.photos/640/640?r=23',
-        creationAt: new Date().toISOString(),
+  ngOnInit() {
+    this.productService.getProducts().subscribe({
+      next: (products) => {
+        this.products.set(products.filter((product) => product.images));
       },
-      {
-        id: Date.now(),
-        title: 'Pro 2',
-        price: 100,
-        image: 'https://picsum.photos/640/640?r=12',
-        creationAt: new Date().toISOString(),
+      error: (e) => {
+        console.log(e);
       },
-      {
-        id: Date.now(),
-        title: 'Pro 3',
-        price: 100,
-        image: 'https://picsum.photos/640/640?r=13',
-        creationAt: new Date().toISOString(),
-      },
-      {
-        id: Date.now(),
-        title: 'Pro 4',
-        price: 100,
-        image: 'https://picsum.photos/640/640?r=33',
-        creationAt: new Date().toISOString(),
-      },
-      {
-        id: Date.now(),
-        title: 'Pro 5',
-        price: 100,
-        image: 'https://picsum.photos/640/640?r=32',
-        creationAt: new Date().toISOString(),
-      },
-      {
-        id: Date.now(),
-        title: 'Pro 6',
-        price: 100,
-        image: 'https://picsum.photos/640/640?r=51',
-        creationAt: new Date().toISOString(),
-      },
-      {
-        id: Date.now(),
-        title: 'Pro 7',
-        price: 100,
-        image: 'https://picsum.photos/640/640?r=42',
-        creationAt: new Date().toISOString(),
-      },
-      {
-        id: Date.now(),
-        title: 'Pro 8',
-        price: 100,
-        image: 'https://picsum.photos/640/640?r=41',
-        creationAt: new Date().toISOString(),
-      },
-    ];
-    this.products.set(InitProducts);
+    });
   }
 
   addToCart(product: Product) {
